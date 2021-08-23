@@ -11,12 +11,12 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     @article.user = current_user
-  if @article.save
-    flash[:success] = "Article was successfully created"
-    redirect_to article_path(@article)
-  else
-   render 'new'
-  end
+    if @article.save
+      flash[:success] = "Article was successfully created"
+      redirect_to article_path(@article)
+    else
+      render 'new'
+    end
   end
 
   def show
@@ -29,25 +29,25 @@ class ArticlesController < ApplicationController
 
   def update
     @article = Article.find(params[:id])
-  if @article.update(article_params)
-    flash[:success] = "Article was updated"
-    redirect_to article_path(@article)
-  else
-    flash[:success] = "Article was not updated"
-    render 'edit'
-  end
+    if @article.update(article_params)
+      flash[:success] = "Article was updated"
+      redirect_to article_path(@article)
+    else
+      flash[:success] = "Article was not updated"
+      render 'edit'
+    end
   end
 
   def destroy
-  @article = current_user.articles.find_by(id: params[:id])
-  if @article.present?
-    @article.destroy
-    flash[:success] = "Article was deleted"
-    redirect_to articles_path
-  else
-    flash[:danger] = "You are not authorised to perform this action."
-    redirect_to articles_path
-  end
+    @article = current_user.articles.find_by(id: params[:id])
+    if @article.present?
+      @article.destroy
+      flash[:success] = "Article was deleted"
+      redirect_to articles_path
+    else
+      flash[:danger] = "You are not authorised to perform this action."
+      redirect_to articles_path
+    end
   end
 
 private
