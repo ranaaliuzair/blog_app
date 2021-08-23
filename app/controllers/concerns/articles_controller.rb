@@ -30,19 +30,24 @@ class ArticlesController < ApplicationController
   def update
     @article = Article.find(params[:id])
   if @article.update(article_params)
-   flash[:success] = "Article was updated"
-   redirect_to article_path(@article)
+    flash[:success] = "Article was updated"
+    redirect_to article_path(@article)
   else
-   flash[:success] = "Article was not updated"
-   render 'edit'
+    flash[:success] = "Article was not updated"
+    render 'edit'
   end
   end
 
   def destroy
     @article = Article.find(params[:id])
+  if @article.user == current_user
     @article.destroy
     flash[:success] = "Article was deleted"
     redirect_to articles_path
+  else
+    flash[:danger] = "User Can only delete his/her own Article"
+    redirect_to articles_path
+  end
   end
 
 private
