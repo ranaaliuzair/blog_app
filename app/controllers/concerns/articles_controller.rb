@@ -39,13 +39,13 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
-  if @article.user == current_user
+  @article = current_user.articles.find_by(id: params[:id])
+  if @article.present?
     @article.destroy
     flash[:success] = "Article was deleted"
     redirect_to articles_path
   else
-    flash[:danger] = "User Can only delete his/her own Article"
+    flash[:danger] = "You are not authorised to perform this action."
     redirect_to articles_path
   end
   end
