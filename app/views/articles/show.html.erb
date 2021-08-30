@@ -15,7 +15,7 @@
   <%= simple_format(@article.description) %>
 <hr>
   <h3>Comments</h3>
-  <%= render partial: 'articles/comment', collection: @article.comments.reverse %>
+  <%= render 'articles/comment', comments: @article.comments.persisted.reverse %>
   <div class="article-actions">
     <% if logged_in? %>
     <%= render partial: 'comments/form' %>
