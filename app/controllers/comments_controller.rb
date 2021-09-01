@@ -11,10 +11,11 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:author_name, :body)
   end
 
-  # def destroy
-  #     @article = Article.find(params[:article_id])
-  #     @comment = @post.comments.find(params[:id])
-  #     @comment.destroy
-  #     redirect_to article_path(@article)
-  # end
+  def like
+    comment = Comment.find(params[:id])
+    comment.increment!(:likes)
+    flash[:success] = 'Thanks for sharing your opinion!'
+    redirect_to article_path(comment.article)
+  end
+
 end

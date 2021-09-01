@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   resources :users, except: [:new]
 
   resources :articles do
-    resources :comments
+    resources :comments do
+      member do
+        post :like
+      end
+    end
   end
 
   get 'about', to: 'pages#about'
